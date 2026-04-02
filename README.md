@@ -25,7 +25,7 @@ A small interview project that answers retail analytics questions from a transac
 genspark_retail_chat/
 ├── app.py
 ├── data/
-├── docs/
+├── screenshots/
 ├── notes/
 ├── scripts/
 ├── src/
@@ -106,11 +106,11 @@ PYTHONPATH=. ./.venv/bin/pytest -q
 ## Screenshots
 Overview screen:
 
-![Overview UI](docs/screenshots/overview.png)
+![Overview UI](screenshots/overview.png)
 
 Conversation and result screen:
 
-![Conversation UI](docs/screenshots/conversation.png)
+![Conversation UI](screenshots/conversation.png)
 
 ## Notes For Review
 - The default experience works without any API key through the rule-based parser.
