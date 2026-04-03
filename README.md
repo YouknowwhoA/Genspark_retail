@@ -68,6 +68,8 @@ Modes:
 - `openai_optional`: try OpenAI first, then fall back safely
 - `openai_required`: require OpenAI parsing and surface API/parser failure directly
 
+To see the green `GPT Live` status in the UI, set `LLM_PARSER_MODE=openai_optional` and restart Streamlit.
+
 ## Run The App
 Streamlit UI:
 ```bash

@@ -25,3 +25,11 @@ This file records notable implementation bugs, their symptoms, the root cause, a
 - Root cause: the code used `st.text_area(key="prompt_input")` and then mutated `st.session_state.prompt_input` in the same execution cycle after the widget was already created.
 - Fix: switched the form to `clear_on_submit=True` and removed the manual mutation of `st.session_state.prompt_input`.
 - Interview takeaway: this shows awareness of framework-specific state rules and a clean fix that simplifies the form logic instead of adding workarounds.
+
+## Bug 4: API key loaded but parser still showed local mode
+- Date: 2026-04-03
+- Symptom: the UI showed `API key loaded` but still labeled the system as `Local Mode` instead of the expected GPT live mode.
+- Error pattern: it looked like the key was not being used, but the real issue was a mode mismatch rather than a missing secret.
+- Root cause: `.env` contained an API key, but `LLM_PARSER_MODE` was still set to `rule_based`, so the app intentionally stayed on the local parser.
+- Fix: clarified the UI so it shows a direct hint when the key is present but GPT mode is not enabled, and documented that `LLM_PARSER_MODE=openai_optional` is required to activate GPT parsing.
+- Interview takeaway: environment flags matter as much as secrets; the system can be correctly configured with a valid key but still remain in fallback mode by design.

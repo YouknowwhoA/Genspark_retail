@@ -101,6 +101,39 @@ def apply_styles() -> None:
             line-height: 1.6;
         }
 
+        .status-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--divider);
+            background: var(--surface-2);
+            color: var(--text-soft);
+            font-size: 0.76rem;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .status-live {
+            border-color: #A8C3A0;
+            background: #EAF2E7;
+            color: #4D6847;
+        }
+
+        .status-local {
+            border-color: var(--divider);
+            background: var(--surface-2);
+            color: var(--text-soft);
+        }
+
         .hero {
             padding-bottom: 40px;
         }
@@ -302,14 +335,26 @@ def init_state() -> None:
 
 def render_header() -> None:
     config = get_llm_parser_config()
-    parser_note = f"OpenAI parsing enabled with {config.model}" if is_llm_parser_enabled(config) else "Rule-based parsing active"
+    openai_ready = is_llm_parser_enabled(config)
+    parser_note = "GPT Live" if openai_ready else "Local Mode"
+    parser_class = "status-live" if openai_ready else "status-local"
+    api_loaded = bool(config.api_key)
+    api_note = "API key loaded" if api_loaded else "No API key loaded"
+    helper_note = ""
+    if api_loaded and not openai_ready:
+        helper_note = "Set LLM_PARSER_MODE=openai_optional and restart to activate GPT."
     st.markdown(
         f"""
         <div class="frame">
             <div class="topline">
                 <div class="brand">
                     <div class="brand-name">Retail Atelier</div>
-                    <div class="brand-note">{parser_note}</div>
+                    <div class="brand-note">{api_note}</div>
+                    <div class="brand-note">{helper_note}</div>
+                </div>
+                <div class="status-row">
+                    <span class="status-pill {parser_class}">{parser_note}</span>
+                    <span class="status-pill">Model: {config.model}</span>
                 </div>
             </div>
         </div>
