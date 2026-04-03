@@ -56,6 +56,11 @@ cp .env.example .env
 ## Environment Variables
 The project supports both rule-based parsing and optional OpenAI-powered parsing.
 
+Default behavior:
+- `LLM_PARSER_MODE=rule_based`
+- No API key is required
+- The app runs fully in local mode
+
 Required only if you want OpenAI parsing:
 ```bash
 LLM_PARSER_MODE=openai_optional
@@ -114,7 +119,13 @@ Conversation and result screen:
 
 ![Conversation UI](screenshots/conversation.png)
 
+GPT mode check:
+
+![GPT mode check](screenshots/gpt%20mode%20check.png)
+
 ## Notes For Review
+- Reviewers do not need to create their own OpenAI key to run the project.
 - The default experience works without any API key through the rule-based parser.
+- If a reviewer wants to test GPT mode, they can create a local `.env` file with their own key and set `LLM_PARSER_MODE=openai_optional`.
 - Optional OpenAI parsing improves natural-language flexibility but is not required to run the project.
 - The bug-fix journey and debugging notes are recorded in `notes/bug_journal.md`.
