@@ -25,8 +25,9 @@ A small interview project that answers retail analytics questions from a transac
 genspark_retail_chat/
 ├── app.py
 ├── data/
-├── screenshots/
+├── design/
 ├── notes/
+├── screenshots/
 ├── scripts/
 ├── src/
 └── tests/
@@ -39,29 +40,29 @@ genspark_retail_chat/
 - There were no empty values in the first inspection pass.
 
 ## Dataset Download / Setup
-1. Download the Kaggle Retail Transaction Dataset:
-   `https://www.kaggle.com/datasets/fahadrehman07/retail-transaction-dataset/data`
-2. Place the CSV file at:
-   `data/Retail_Transaction_Dataset.csv`
-3. If the file is already present in the repository, no extra dataset setup is required.
+The repository is set up to run from the project root after cloning.
 
-## Setup
+1. Check whether `data/Retail_Transaction_Dataset.csv` is already present.
+2. If it is missing, download the Kaggle Retail Transaction Dataset:
+   [Retail Transaction Dataset](https://www.kaggle.com/datasets/fahadrehman07/retail-transaction-dataset/data)
+3. Place the CSV at `data/Retail_Transaction_Dataset.csv`.
+
+If the file is already in the repo, no extra dataset setup is required.
+
+## Quick Start
 ```bash
-cd '/Users/dzwlalala/Documents/New project/genspark_retail_chat'
+git clone https://github.com/YouknowwhoA/Genspark_retail.git
+cd Genspark_retail
 python3 -m venv .venv
-./.venv/bin/pip install -r requirements.txt
+source .venv/bin/activate
+python -m pip install -r requirements.txt
 cp .env.example .env
 ```
 
 ## Environment Variables
-The project supports both rule-based parsing and optional OpenAI-powered parsing.
+The app runs in local rule-based mode by default and does not require an API key.
 
-Default behavior:
-- `LLM_PARSER_MODE=rule_based`
-- No API key is required
-- The app runs fully in local mode
-
-Required only if you want OpenAI parsing:
+Optional GPT mode in `.env`:
 ```bash
 LLM_PARSER_MODE=openai_optional
 OPENAI_API_KEY=your_key_here
@@ -73,25 +74,22 @@ Modes:
 - `openai_optional`: try OpenAI first, then fall back safely
 - `openai_required`: require OpenAI parsing and surface API/parser failure directly
 
-To see the green `GPT Live` status in the UI, set `LLM_PARSER_MODE=openai_optional` and restart Streamlit.
+To enable GPT mode in the UI, set `LLM_PARSER_MODE=openai_optional`, add your own `OPENAI_API_KEY`, and restart Streamlit.
 
 ## Run The App
 Streamlit UI:
 ```bash
-cd '/Users/dzwlalala/Documents/New project/genspark_retail_chat'
-PYTHONPATH=. ./.venv/bin/streamlit run app.py
+python -m streamlit run app.py
 ```
 
 FastAPI server:
 ```bash
-cd '/Users/dzwlalala/Documents/New project/genspark_retail_chat'
-PYTHONPATH=. ./.venv/bin/uvicorn src.api:app --reload
+python -m uvicorn src.api:app --reload
 ```
 
 ## Run Tests
 ```bash
-cd '/Users/dzwlalala/Documents/New project/genspark_retail_chat'
-PYTHONPATH=. ./.venv/bin/pytest -q
+python -m pytest -q
 ```
 
 ## Example Queries
@@ -121,7 +119,7 @@ Conversation and result screen:
 
 GPT mode check:
 
-![GPT mode check](screenshots/gpt%20mode%20check.png)
+![GPT mode check](screenshots/gpt_mode_check.png)
 
 ## Notes For Review
 - Reviewers do not need to create their own OpenAI key to run the project.

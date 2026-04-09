@@ -33,3 +33,11 @@ This file records notable implementation bugs, their symptoms, the root cause, a
 - Root cause: `.env` contained an API key, but `LLM_PARSER_MODE` was still set to `rule_based`, so the app intentionally stayed on the local parser.
 - Fix: clarified the UI so it shows a direct hint when the key is present but GPT mode is not enabled, and documented that `LLM_PARSER_MODE=openai_optional` is required to activate GPT parsing.
 - Interview takeaway: environment flags matter as much as secrets; the system can be correctly configured with a valid key but still remain in fallback mode by design.
+
+## Bug 5: Repository reproducibility issues in reviewer handoff
+- Date: 2026-04-09
+- Symptom: a fresh reviewer would have had to guess the local machine setup because the README used machine-specific absolute paths, and `requirements.txt` was not a real dependency file.
+- Error pattern: the project logic worked, but the repo delivery was not yet clone-and-run friendly.
+- Root cause: documentation was written against one developer machine, and the dependency file still contained planning notes instead of installable Python packages.
+- Fix: rewrote the README to use repo-root instructions, created a proper `requirements.txt` from the actual imports, and kept the optional GPT setup explicit so the local rule-based mode still works without an API key.
+- Interview takeaway: delivery quality is part of engineering quality; a take-home is stronger when a reviewer can clone it, install it, and run it without guessing anything about the author's laptop.
